@@ -4,14 +4,18 @@
   "description": "Coding exercise for LogRhythm",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register test.coffee"
+    "test": "mocha --compilers coffee:coffee-script/register --recursive test"
   },
-  "dependencies":
-{    "chokidar": "latest"
+  "dependencies":{
+    "chokidar": "latest",
+    "async": "latest"
   },
   "devDependencies": {
     "coffee-script": "latest",
-    "mocha": "latest"
+    "mocha": "latest",
+    "sinon": "latest",
+    "chai": "latest",
+    "sinon-chai": "latest"
   },
   "author": "Rachel Rivera"
 }
