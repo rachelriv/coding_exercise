@@ -3,6 +3,10 @@ path = require 'path'
 fs = require 'fs'
 
 class DirectoryValidator
+
+  # filesystem injected as a dependency for testing purposes
+  constructor: (@filesystem = fs) ->
+
   validate: (directoryPath, callback) ->
     async.series [
       (eachCallback) => @checkForExistence directoryPath, eachCallback,
@@ -10,22 +14,18 @@ class DirectoryValidator
     ]
     , callback
 
-
   checkForExistence: (path, callback) ->
-    fs.exists path, (exists) ->
-      console.log "path #{path}"
+    @filesystem.exists path, (exists) ->
       unless exists
-        callback null
-                 , {message: 'Specified directory does not exist', status:  'failure'}
+        callback 'Specified path does not exist'
       else
         callback null, {status: 'success'}
 
   checkIsDirectory: (path, callback) ->
-    fs.stat path, (err, stats) ->
+    @filesystem.stat path, (err, stats) ->
       return callback err if err
       unless stats?.isDirectory()
-        callback null
-                 , {message: 'Specified path is not a directory', status:  'failure'}
+        callback 'Specified path is not a directory'
       else
         callback null, {status: 'success'}
 
