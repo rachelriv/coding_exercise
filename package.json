@@ -1,0 +1,17 @@
+{
+  "name": "coding_exercise",
+  "version": "0.0.0",
+  "description": "Coding exercise for LogRhythm",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script/register test.coffee"
+  },
+  "dependencies":
+{    "chokidar": "latest"
+  },
+  "devDependencies": {
+    "coffee-script": "latest",
+    "mocha": "latest"
+  },
+  "author": "Rachel Rivera"
+}
