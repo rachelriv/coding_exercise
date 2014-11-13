@@ -1,10 +1,10 @@
-DirectoryValidator = require './lib/directory_validator'
+DirectoryValidator = require './lib/validators/directory_validator'
 FileMonitor = require './lib/file_monitor'
 path = require 'path'
 
 if process.argv.length isnt 3
-  console.error "Requires one commandline argument:
-                 the directory that you would like to monitor"
+  console.error "Requires one commandline argument: the relative
+                 path of the directory that you would like to monitor"
   process.exit(1)
 
 providedDirectory = path.resolve(__dirname, process.argv[2])
@@ -15,5 +15,5 @@ directoryValidator.validate providedDirectory, (error, results) ->
     console.error error
     process.exit(1)
   else
-    fileMonitor = new FileMonitor providedDirectory
+    fileMonitor = new FileMonitor directory: providedDirectory
     fileMonitor.startMonitoring()

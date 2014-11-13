@@ -8,7 +8,10 @@
   },
   "dependencies":{
     "chokidar": "latest",
-    "async": "latest"
+    "async": "latest",
+    "clone": "latest",
+    "jsonfile": "latest",
+    "util": "latest"
   },
   "devDependencies": {
     "coffee-script": "latest",
