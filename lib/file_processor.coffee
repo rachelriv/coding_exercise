@@ -1,30 +1,30 @@
-FileValidator = require './validators/file_validator'
-jsonfile = require 'jsonfile'
 util = require 'util'
+path = require 'path'
 
 class FileProcessor
 
-  constructor: ->
-    @fileValidator = new FileValidator
+  # JSON file reader injected as a dependency for testing
+  constructor: (@jsonfile) ->
+    @jsonfile ?= require 'jsonfile'
 
-  process: ({startTime, filePath, output}) ->
-    # @fileValidator.validate file, (error, results) =>
-    # unless error
-    jsonfile.readFile filePath, (err, obj) =>
-      input = util.inspect obj
-      @updateOutput input, output
-      @updateAvgProcessingTime output
+  process: ({startTimes, filePath, output}) ->
+    if path.extname(filePath) is '.json'
+      @jsonfile.readFile filePath, (error, inputObj) =>
+        unless error
+          @updateCount inputObj, output
+          @updateAvgProcessingTime {startTimes, filePath, output}
 
-  updateOutput: (input, output) ->
-    countToUpdate = "#{input.Type}Cnt"
-    output[countToUpdate]++
+  updateCount: (input, output) ->
+    if input?.Type
+      countToUpdate = "#{input.Type}Cnt"
+      output[countToUpdate] ?= 0
+      output[countToUpdate]++
 
-  updateAvgProcessingTime: (output) ->
-    newTotalCounts = output.DoorCnt + output.ImgCnt + output.AlarmCnt
-    oldTotalCounts = newTotalCounts - 1
-    newestProcessingTime = Date.now() - output.startTime
-    output.avgProcessingTime = (output.avgProcessingTime * (oldTotalCounts / newTotalCounts)) + (newestProcessingTime * (1/newTotalCounts))
-
+  updateAvgProcessingTime: ({startTimes, filePath, output}) ->
+    currentProcessingTime = Date.now() - startTimes[filePath]
+    endtime = Date.now()
+    console.log "endTime for #{filePath}: #{endtime}"
+    output
 
 
 module.exports = FileProcessor

@@ -1,4 +1,4 @@
-DirectoryValidator = require './lib/validators/directory_validator'
+DirectoryValidator = require './lib/directory_validator'
 FileMonitor = require './lib/file_monitor'
 path = require 'path'
 

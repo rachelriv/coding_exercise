@@ -14,22 +14,21 @@ class FileMonitor
                               , {ignored: /[\/\\]\./, persistent: true}
 
   startMonitoring: ->
-    output = @getInitialOutput()
+    output = {}
+    startTimes = {}
     @watcher.on 'add', (filePath) =>
-      startTime = Date.now()
-      @processor.process { startTime, filePath, output }
+      startTimes[filePath] = Date.now()
+      @processor.process { startTimes, filePath, output }
 
-    # print output and reset for next second interval
+    # print output and reset each second
     setInterval =>
         console.log JSON.stringify output
-        currentOutput = @getInitialOutput()
+        output = @resetOutput output
       , 1000
 
-
-  getInitialOutput: ->
-    DoorCnt: 0
-    ImgCnt: 0
-    AlarmCnt: 0
-    avgProcessingTime: 0
+  resetOutput: (output) ->
+    for k, v of output
+      output[k] = 0
+    output
 
 module.exports = FileMonitor

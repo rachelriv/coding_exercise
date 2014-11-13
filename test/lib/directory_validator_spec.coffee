@@ -27,35 +27,31 @@ describe 'DirectoryValidator', ->
       it 'checks that the path is a directory', ->
         expect(@directoryValidator.checkIsDirectory).to.have.been.calledWith '/some/directory/path'
 
-      it 'checks that the path exists before checking that the path is a directory', ->
-        expect(@directoryValidator.checkForExistence).to.have.been
-          .calledBefore @directoryValidator.checkIsDirectory
-
       it 'does not return an error in the callback', ->
         expect(@error).to.be.undefined
 
-    context 'when there is an error validating the path', ->
-      context 'the path does not exist', ->
+    context 'when an error occurs validating the path', ->
+      context 'when the error occurs in #checkForExistence', ->
         beforeEach (done) ->
           @directoryValidator.checkForExistence
             .callsArgWith 1, 'path does not exist'
           @directoryValidator.validate '/some/directory/path'
                                      , (@error, @results) => done()
 
-        it 'returns an error indicating the path does not exist in the callback', ->
+        it 'returns an error that the path does not exist in the callback', ->
           expect(@error).to.equal 'path does not exist'
 
-        it 'does not check to see if the (non-existent) path is a directory', ->
+        it 'does not call #checkIsDirectory', ->
           expect(@directoryValidator.checkIsDirectory).to.not.have.been.called
 
-      context 'the path is not a directory', ->
+      context 'when the error occurs in #checkIsDirectory', ->
         beforeEach (done) ->
           @directoryValidator.checkIsDirectory
             .callsArgWith 1, 'path is not a directory'
           @directoryValidator.validate '/some/directory/path'
                                      , (@error, @results) => done()
 
-        it 'returns an error indicating the path is not a directory in the callback', ->
+        it "returns an error that the path isn't a directory in the callback", ->
           expect(@error).to.equal 'path is not a directory'
 
 
@@ -93,7 +89,7 @@ describe 'DirectoryValidator', ->
       it 'returns an error in the callback', ->
         expect(@error).to.equal 'Specified path is not a directory'
 
-    context 'when the path exists', ->
+    context 'when the path is a directory', ->
       beforeEach (done) ->
         stats = isDirectory: sinon.stub().returns true
         filesystem = stat: sinon.stub().callsArgWith 1, null, stats
@@ -103,5 +99,5 @@ describe 'DirectoryValidator', ->
       it 'does not return an error in the callback', ->
         expect(@error).to.be.null
 
-      it 'returns an object indicating that the path was successfully found', ->
+      it 'returns an object indicating that the directory check was successful', ->
         expect(@result.status).to.equal 'success'

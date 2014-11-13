@@ -3,7 +3,6 @@ sinon = require 'sinon'
 expect = chai.expect
 chai.use(require 'sinon-chai')
 FileMonitor = require '../../lib/file_monitor'
-FileProcessor = require '../../lib/file_processor'
 
 
 describe 'FileMonitor', ->
@@ -15,16 +14,12 @@ describe 'FileMonitor', ->
       @processor = process: sinon.stub()
       @directory = '/some/valid/directory/path'
       @fileMonitor = new FileMonitor {@directory, @fsWatch, @processor}
-      @fileMonitor.getInitialOutput = sinon.stub().returns sample: 'output'
 
     context 'when first beginning to monitor', ->
       beforeEach ->
         @fileMonitor.startMonitoring()
 
-      it 'initializes the output status', ->
-        expect(@fileMonitor.getInitialOutput).to.have.been.called
-
-      it 'adds a listener for when files are added', ->
+      it 'adds a listener that listens for when files are added', ->
         expect(@watcher.on).to.have.been.calledWith 'add'
 
     context 'when a file is added', ->
@@ -36,15 +31,15 @@ describe 'FileMonitor', ->
       afterEach ->
         Date.now.restore()
 
-      it 'sets the start time for when the file was added', ->
+      it 'sets the start for when the file was added', ->
         expect(Date.now).to.have.been.called
 
       it 'processes the added file', ->
         expect(@processor.process).to.have.been
           .calledWith
-            startTime: 12345
+            startTimes: 'added/file.json': 12345
             filePath: 'added/file.json'
-            output: sample: 'output'
+            output: {}
 
     context 'when less than one second has passed', ->
       beforeEach ->
@@ -65,30 +60,38 @@ describe 'FileMonitor', ->
     context 'when one second has passed', ->
       beforeEach ->
         @clock = sinon.useFakeTimers(0, 'setInterval')
-        sinon.spy(process.stdout, 'write')
+        sinon.stub(process.stdout, 'write')
         @fileMonitor.startMonitoring()
+        @clock.tick 1000
 
       afterEach ->
         @clock.restore()
-        process.stdout.write.restore()
 
       it 'logs the current output to stdout exactly once', ->
-        @clock.tick 1000
-        expect(process.stdout.write).to.have.been.calledOnce
-        expect(process.stdout.write).to.have.been
-          .calledWith JSON.stringify sample: 'output'
+        callCount = process.stdout.write.callCount
+
+        # unstub writing to standard output so
+        # the results of this test are logged
+        process.stdout.write.restore()
+
+        expect(callCount).to.equal 1
 
     context 'when 100 seconds have passed', ->
       beforeEach ->
         @clock = sinon.useFakeTimers(0, 'setInterval')
         sinon.stub(process.stdout, 'write')
         @fileMonitor.startMonitoring()
+        @clock.tick 100000
 
       afterEach ->
         @clock.restore()
-        process.stdout.write.restore()
 
       it 'logs the current output to stdout 100 times', ->
-        @clock.tick 100000
-        expect(process.stdout.write.callCount).to.equal 100
+        callCount = process.stdout.write.callCount
+
+        # unstub writing to standard output so
+        # the results of this test are logged
+        process.stdout.write.restore()
+
+        expect(callCount).to.equal 100
 
