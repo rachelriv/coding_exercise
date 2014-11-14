@@ -22,3 +22,22 @@ Output:
 
 
 Some example input files should be attached.
+
+# Setup #
+```
+git clone https://github.com/rachelriv/coding_exercise
+cd coding_exercise
+npm install
+```
+
+# Testing #
+From root directory of repository: 
+```
+npm test
+```
+
+# Usage #
+From root directory of repository:
+```
+coffee index.coffee [relative\path\to\directory]
+```
