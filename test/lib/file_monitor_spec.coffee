@@ -95,3 +95,19 @@ describe 'FileMonitor', ->
 
         expect(callCount).to.equal 100
 
+
+  describe '#resetOutput', ->
+    beforeEach ->
+      @fileMonitor = new FileMonitor directory: '/some/directory'
+      @output =
+        a: 1
+        b: 20
+      @resetOutput =
+        a: 0
+        b: 0
+      @fileMonitor.resetOutput @output
+
+    it 'reset the output values to all be zero', ->
+      expect(@output).to.eql @resetOutput
+
+

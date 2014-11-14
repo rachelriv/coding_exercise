@@ -63,6 +63,7 @@ describe 'FileProcessor', ->
           expect(@fileProcessor.updateAvgProcessingTime).to.not
             .have.been.called
 
+
   describe '#updateCount', ->
     beforeEach ->
       @fileProcessor = new FileProcessor
@@ -73,7 +74,7 @@ describe 'FileProcessor', ->
         @output = {}
         @fileProcessor.updateCount input, @output
 
-      it 'adds/increments the count of the type in the output', ->
+      it 'adds/increments the count of the given type in the output', ->
         expect(@output.ExampleCnt).to.equal 1
 
     context 'when the JSON input does not specify a "Type"', ->
@@ -82,12 +83,8 @@ describe 'FileProcessor', ->
         @output = {}
         @fileProcessor.updateCount input, @output
 
-      it 'does not add or increment anything', ->
+      it 'does not add or increment any counts in the output', ->
         expect(@output).to.eql {}
 
 
-
-
-
-
-
+  describe '#updateAvgProcessingTime', ->

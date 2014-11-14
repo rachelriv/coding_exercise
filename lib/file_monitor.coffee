@@ -22,13 +22,13 @@ class FileMonitor
 
     # print output and reset each second
     setInterval =>
+        # default avgProcessingTime if no files were processed
+        output.avgProcessingTime ?= 0
         console.log JSON.stringify output
         output = @resetOutput output
       , 1000
 
   resetOutput: (output) ->
-    for k, v of output
-      output[k] = 0
-    output
+    (output[k] = 0 for k in Object.keys(output))
 
 module.exports = FileMonitor

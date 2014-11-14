@@ -1,0 +1,113 @@
+{
+  "name": "coding_exercise",
+  "version": "0.0.0",
+  "dependencies": {
+    "async": {
+      "version": "0.9.0",
+      "from": "async@0.9.0",
+      "resolved": "https://registry.npmjs.org/async/-/async-0.9.0.tgz"
+    },
+    "chokidar": {
+      "version": "0.10.6",
+      "from": "chokidar@0.10.6",
+      "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-0.10.6.tgz",
+      "dependencies": {
+        "readdirp": {
+          "version": "1.1.0",
+          "from": "readdirp@~1.1.0",
+          "resolved": "https://registry.npmjs.org/readdirp/-/readdirp-1.1.0.tgz",
+          "dependencies": {
+            "graceful-fs": {
+              "version": "2.0.3",
+              "from": "graceful-fs@~2.0.0",
+              "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-2.0.3.tgz"
+            },
+            "minimatch": {
+              "version": "0.2.14",
+              "from": "minimatch@~0.2.12",
+              "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-0.2.14.tgz",
+              "dependencies": {
+                "lru-cache": {
+                  "version": "2.5.0",
+                  "from": "lru-cache@2",
+                  "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-2.5.0.tgz"
+                },
+                "sigmund": {
+                  "version": "1.0.0",
+                  "from": "sigmund@~1.0.0",
+                  "resolved": "https://registry.npmjs.org/sigmund/-/sigmund-1.0.0.tgz"
+                }
+              }
+            },
+            "readable-stream": {
+              "version": "1.0.33",
+              "from": "readable-stream@~1.0.26-2",
+              "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.0.33.tgz",
+              "dependencies": {
+                "core-util-is": {
+                  "version": "1.0.1",
+                  "from": "core-util-is@~1.0.0",
+                  "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.1.tgz"
+                },
+                "isarray": {
+                  "version": "0.0.1",
+                  "from": "isarray@0.0.1",
+                  "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
+                },
+                "string_decoder": {
+                  "version": "0.10.31",
+                  "from": "string_decoder@~0.10.x",
+                  "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-0.10.31.tgz"
+                },
+                "inherits": {
+                  "version": "2.0.1",
+                  "from": "inherits@~2.0.1",
+                  "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
+                }
+              }
+            }
+          }
+        },
+        "async-each": {
+          "version": "0.1.6",
+          "from": "async-each@~0.1.5",
+          "resolved": "https://registry.npmjs.org/async-each/-/async-each-0.1.6.tgz"
+        }
+      }
+    },
+    "clone": {
+      "version": "0.1.18",
+      "from": "clone@0.1.18",
+      "resolved": "https://registry.npmjs.org/clone/-/clone-0.1.18.tgz"
+    },
+    "coffee-script": {
+      "version": "1.8.0",
+      "from": "coffee-script@latest",
+      "resolved": "https://registry.npmjs.org/coffee-script/-/coffee-script-1.8.0.tgz",
+      "dependencies": {
+        "mkdirp": {
+          "version": "0.3.5",
+          "from": "mkdirp@0.3.5",
+          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz"
+        }
+      }
+    },
+    "jsonfile": {
+      "version": "2.0.0",
+      "from": "jsonfile@2.0.0",
+      "resolved": "https://registry.npmjs.org/jsonfile/-/jsonfile-2.0.0.tgz"
+    },
+    "util": {
+      "version": "0.10.3",
+      "from": "util@0.10.3",
+      "resolved": "https://registry.npmjs.org/util/-/util-0.10.3.tgz",
+      "dependencies": {
+        "inherits": {
+          "version": "2.0.1",
+          "from": "inherits@2.0.1",
+          "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
+        }
+      }
+    }
+  }
+}
