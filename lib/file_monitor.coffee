@@ -30,5 +30,6 @@ class FileMonitor
 
   resetOutput: (output) ->
     (output[k] = 0 for k in Object.keys(output))
+    output
 
 module.exports = FileMonitor

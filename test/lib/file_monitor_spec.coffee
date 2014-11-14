@@ -31,7 +31,7 @@ describe 'FileMonitor', ->
       afterEach ->
         Date.now.restore()
 
-      it 'sets the start for when the file was added', ->
+      it 'sets the start time for when the file was added', ->
         expect(Date.now).to.have.been.called
 
       it 'processes the added file', ->

@@ -21,10 +21,17 @@ class FileProcessor
       output[countToUpdate]++
 
   updateAvgProcessingTime: ({startTimes, filePath, output}) ->
-    currentProcessingTime = Date.now() - startTimes[filePath]
-    endtime = Date.now()
-    console.log "endTime for #{filePath}: #{endtime}"
+    totalCount = @getTotalCount output
+    weightedOldAvg = (output.avgProcessingTime or 0) * ((totalCount-1)/totalCount)
+    weightedNewTime = (Date.now() - startTimes[filePath]) * (1/totalCount)
+    output.avgProcessingTime = weightedOldAvg + weightedNewTime
     output
+
+  getTotalCount: (output) ->
+    totalCount = 0
+    for key, value of output
+      totalCount += value if key.match(/Cnt/)
+    totalCount
 
 
 module.exports = FileProcessor

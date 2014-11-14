@@ -88,3 +88,44 @@ describe 'FileProcessor', ->
 
 
   describe '#updateAvgProcessingTime', ->
+    context 'when the previous processing time exists', ->
+      beforeEach ->
+        @startTimes =
+          'file1': 0
+        @output = avgProcessingTime: 10
+        @filePath = 'file1'
+        @fileProcessor = new FileProcessor
+        sinon.stub(Date, 'now', -> 5)
+        @fileProcessor.getTotalCount = sinon.stub().returns 7
+        @fileProcessor.updateAvgProcessingTime {startTimes: @startTimes, output: @output, filePath: @filePath}
+
+      afterEach ->
+        Date.now.restore()
+
+      it 'gets the total count', ->
+        expect(@fileProcessor.getTotalCount).to.have.been.called
+
+      it 'computes the average by adding the weighted old average with the weighted new time', ->
+        count = 7
+        oldAvg = 10
+        newTime = 5
+        weightedOldAvg = oldAvg * ((count - 1)/ count)
+        weightedNewTime = newTime * (1/count)
+        expect(@output.avgProcessingTime).to.equal (weightedOldAvg + weightedNewTime)
+
+    context 'when the previous processing time does not exist', ->
+      beforeEach ->
+        @startTimes =
+          'file1': 0
+        @output = {}
+        @filePath = 'file1'
+        @fileProcessor = new FileProcessor
+        sinon.stub(Date, 'now', -> 5)
+        @fileProcessor.getTotalCount = sinon.stub().returns 1
+        @fileProcessor.updateAvgProcessingTime {startTimes: @startTimes, output: @output, filePath: @filePath}
+
+      afterEach ->
+        Date.now.restore()
+
+      it 'sets the most recent time to the new average', ->
+        expect(@output.avgProcessingTime).to.equal 5
